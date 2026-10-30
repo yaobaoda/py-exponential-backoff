@@ -3,15 +3,16 @@
 ```
 backoff.py
 ```
-Run the Python test suite next to the core logic. It shows the exact delay calculations.
+Look at the test suite next to the implementation for concrete examples.
 
-Minimal delay calculator. Applies full jitter.
+Minimal delay calculator. Computes exponential backoff with full jitter using only the standard library. Zero external packages.
 
-Uses only the Python standard library. No packages to install.
+A quick gotcha that bit me: if you cap the maximum delay too high, `time.sleep()` can throw an OverflowError on 32-bit systems. Keep your ceiling reasonable.
 
-One gotcha that bit me early on: always cap your `max_delay`. If you forget to bound the exponential growth, a long network partition will make your retry loop wait for days.
+## Questions people ask
 
-## Common questions
+**Is there an SDK I should install first?**  
+No. `backoff.py` makes plain HTTP requests. The setup is just `python3` and one environment variable. That is the whole dependency tree.
 
-**Do I need an SDK?**  
-No. `backoff.py` sends the request over plain HTTP. The setup is just `python3` and one environment variable. That is the entire dependency tree.
+**How much of this is reusable?**  
+Copy `backoff.py`. That is the only logic worth keeping. The surrounding code just exists to make the example run standalone.
